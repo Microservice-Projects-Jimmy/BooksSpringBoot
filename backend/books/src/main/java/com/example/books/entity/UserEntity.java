@@ -12,8 +12,11 @@ public class UserEntity {
     private String name;
     private String username;
     private String password;
-    private Date created_at;
-    private Date deleted_at;
+    private Date createdAt;
+    private Date deletedAt;
+
+    public UserEntity() {
+    }
 
     public Long getId() {
         return id;
@@ -47,19 +50,19 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getDeleted_at() {
-        return deleted_at;
+    public Date getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeleted_at(Date deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

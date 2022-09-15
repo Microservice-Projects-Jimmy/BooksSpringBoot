@@ -14,8 +14,11 @@ public class BookEntity {
     private String description;
     private String image;
     private Date publishedDate;
-    private Date created_at;
-    private Date deleted_at;
+    private Date createdAt;
+    private Date deletedAt;
+
+    public BookEntity() {
+    }
 
     public Long getId() {
         return id;
@@ -65,19 +68,19 @@ public class BookEntity {
         this.publishedDate = publishedDate;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date created_at) {
+        this.createdAt = created_at;
     }
 
-    public Date getDeleted_at() {
-        return deleted_at;
+    public Date getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeleted_at(Date deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
