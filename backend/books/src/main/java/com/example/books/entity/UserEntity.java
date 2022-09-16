@@ -2,6 +2,7 @@ package com.example.books.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -12,10 +13,19 @@ public class UserEntity {
     private String name;
     private String username;
     private String password;
+    private String token;
     private Date createdAt;
     private Date deletedAt;
 
     public UserEntity() {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {

@@ -5,12 +5,13 @@ import com.example.books.entity.UserEntity;
 public class User {
     private Long id;
     private String username;
-
+    private String name;
 
     public static User toModel(UserEntity userEntity){
         User user = new User();
         user.setId(userEntity.getId());
         user.setUsername(userEntity.getUsername());
+        user.setName(userEntity.getName());
 
         return user;
     }
@@ -32,5 +33,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

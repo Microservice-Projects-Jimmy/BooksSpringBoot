@@ -17,6 +17,8 @@ public class BookEntity {
     private Date createdAt;
     private Date deletedAt;
 
+    private boolean isBorrowed;
+
     public BookEntity() {
     }
 
@@ -72,8 +74,8 @@ public class BookEntity {
         return createdAt;
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getDeletedAt() {
@@ -82,5 +84,13 @@ public class BookEntity {
 
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
     }
 }
