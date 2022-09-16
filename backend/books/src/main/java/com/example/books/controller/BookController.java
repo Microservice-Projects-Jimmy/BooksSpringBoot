@@ -1,11 +1,13 @@
 package com.example.books.controller;
 
+import com.example.books.exception.BookMissingException;
 import com.example.books.model.Book;
 import com.example.books.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,24 @@ public class BookController {
 
             return  ResponseEntity.ok(books);
     }
-//    @PutMapping("/books/{book_id}/borrow")
-//    public ResponseEntity<Book> borrowBook(@PathVariable("book_id") int bookId){
-//        //1 check if current user already has  two books
-//        //2 check if book is available
-//        //3 set book borrrowed
-//        //4 add book to users borrowed  list
-//    }
+    @PutMapping("/{book_id}/borrow")
+    public ResponseEntity<Book> borrowBook(@PathVariable("book_id") Long bookId, HttpServletRequest request){
+        //1 check if current user already has  two books V
+        //2 check if book is available V
+        //3 set book borrrowed
+        //4 add book to users borrowed  list
+
+        var userId = (Long) request.getAttribute("userId");
+
+        bookService.validateUserForBorrow(userId);
+        var book = bookService.getOne(bookId);
+        if(book == null || book.isBorrowed()){
+            throw new BookMissingException();
+        }
+        bookService.borrowBook(userId, book);
+
+        return ResponseEntity.ok(Book.toModel(book));
+
+
+    }
 }

@@ -19,6 +19,8 @@ public class BookEntity {
 
     private boolean isBorrowed;
 
+    private int copyCount;
+
     public BookEntity() {
     }
 
