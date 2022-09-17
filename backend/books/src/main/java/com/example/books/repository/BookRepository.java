@@ -12,4 +12,8 @@ public interface BookRepository extends CrudRepository<BookEntity, Long> {
 
     @Query(value = "SELECT * FROM books WHERE books.id IN (SELECT book_id FROM users_books WHERE user_id=:userId)", nativeQuery = true)
     List<BookEntity> findAllBooksOfUser(@Param("userId") Long userId);
+
+
+
+
 }

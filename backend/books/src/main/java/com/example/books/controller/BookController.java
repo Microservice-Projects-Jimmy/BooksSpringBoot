@@ -5,6 +5,7 @@ import com.example.books.model.Book;
 import com.example.books.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +33,6 @@ public class BookController {
     }
     @PutMapping("/{book_id}/borrow")
     public ResponseEntity<Book> borrowBook(@PathVariable("book_id") Long bookId, HttpServletRequest request){
-        //1 check if current user already has  two books V
-        //2 check if book is available V
-        //3 set book borrrowed
-        //4 add book to users borrowed  list
 
         var userId = (Long) request.getAttribute("userId");
 
@@ -49,5 +46,25 @@ public class BookController {
         return ResponseEntity.ok(Book.toModel(book));
 
 
+    }
+
+    @PutMapping("/{book_id}/return")
+    public  ResponseEntity returnBook(@PathVariable("book_id") Long bookId, HttpServletRequest request){
+        var userId = (Long) request.getAttribute("userId");
+        var book = bookService.getOne(bookId);
+
+        bookService.returnOne(userId, book);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    @PutMapping("/return-all")
+    public ResponseEntity returnAllbooks (HttpServletRequest request){
+        var userId = (Long) request.getAttribute("userId");
+        var books = bookService.getAllBooksOfUser(userId);
+        bookService.returnAll(userId, books);
+
+        return ResponseEntity.ok().build();
     }
 }

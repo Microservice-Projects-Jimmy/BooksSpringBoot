@@ -58,8 +58,31 @@ public class BookService {
             throw new UserReachedBorrowLimit();
         }
     }
+    public List<BookEntity> getAllBooksOfUser(Long userId){
+        return bookRepository.findAllBooksOfUser(userId);
+    }
 
     public BookEntity getOne(Long id){
         return bookRepository.findById(id).get();
     }
+
+    public void returnOne(Long userId, BookEntity book) {
+        var entity = userBookRepository.findByUserIdAndBookId(userId, book.getId());
+        if(entity.isEmpty()){
+            throw new BookMissingException();
+        }
+        userBookRepository.delete(entity.get());
+        var bookCopyCount = book.getCopyCount();
+        book.setCopyCount(++bookCopyCount);
+        bookRepository.save(book);
+
+    }
+
+    public void returnAll(Long userId, List<BookEntity> bookEntities){
+
+        bookEntities.stream().map(bookEntity -> { var copyCount = bookEntity.getCopyCount(); bookEntity.setCopyCount(++copyCount); return bookEntity;}).collect(Collectors.toList());
+        bookRepository.saveAll(bookEntities);
+        userBookRepository.deleteByUserId(userId);
+    }
+
 }
