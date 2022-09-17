@@ -15,9 +15,9 @@ public class UserBookEntity {
 
     private Long bookId;
 
-    private Date createAt;
+    private Date createdAt;
 
-    private Date deleteAt;
+    private Date deletedAt;
 
     public Long getId() {
         return id;
@@ -43,19 +43,19 @@ public class UserBookEntity {
         this.bookId = bookId;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getDeleteAt() {
-        return deleteAt;
+    public Date getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeleteAt(Date deleteAt) {
-        this.deleteAt = deleteAt;
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

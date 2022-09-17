@@ -6,7 +6,7 @@ CREATE TABLE books
      description    VARCHAR(225),
      image          VARCHAR(225),
      published_date TIMESTAMP,
-     is_borrowed    BOOLEAN DEFAULT false,
+     copy_count     INTEGER,
      created_at     TIMESTAMP,
      deleted_at     TIMESTAMP
 

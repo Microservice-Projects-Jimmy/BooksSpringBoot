@@ -39,9 +39,9 @@ public class BookController {
 
         var userId = (Long) request.getAttribute("userId");
 
-        bookService.validateUserForBorrow(userId);
+        bookService.validateUserForBorrow(userId, bookId);
         var book = bookService.getOne(bookId);
-        if(book == null || book.isBorrowed()){
+        if(book == null){
             throw new BookMissingException();
         }
         bookService.borrowBook(userId, book);

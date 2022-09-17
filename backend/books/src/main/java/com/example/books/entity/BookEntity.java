@@ -17,8 +17,6 @@ public class BookEntity {
     private Date createdAt;
     private Date deletedAt;
 
-    private boolean isBorrowed;
-
     private int copyCount;
 
     public BookEntity() {
@@ -88,11 +86,11 @@ public class BookEntity {
         this.deletedAt = deletedAt;
     }
 
-    public boolean isBorrowed() {
-        return isBorrowed;
+    public int getCopyCount() {
+        return copyCount;
     }
 
-    public void setBorrowed(boolean borrowed) {
-        isBorrowed = borrowed;
+    public void setCopyCount(int copyCount) {
+        this.copyCount = copyCount;
     }
 }
