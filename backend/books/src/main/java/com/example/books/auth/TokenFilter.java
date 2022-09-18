@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-
 @Component
 @Slf4j
 public class TokenFilter extends OncePerRequestFilter {
@@ -30,23 +29,20 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
                 if (request.getRequestURI().equals(LOGIN_PATH) || request.getRequestURI().equals(REGISTER_PATH)) {
                     filterChain.doFilter(request, response);
                     return;
                 }
 
-                var token = Arrays.stream(request.getCookies())
-                        .filter(cookie -> AUTH_COOKIE.equals(cookie.getName()))
-                        .map(Cookie::getValue)
-                        .findAny();
+                var token = request.getHeader("Authorization");
 
-                if (token.isEmpty()) {
+                if (token == null || token.isBlank()) {
                     response.setStatus(401);
-
                     return;
                 }
                 // token=id_tokenValue
-                String[] parts = token.get().split("_");
+                String[] parts = token.split("_");
                 if (parts.length != 2) {
                     response.setStatus(401);
                 }

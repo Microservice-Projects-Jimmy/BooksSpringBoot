@@ -1,6 +1,5 @@
 package com.example.books.service;
 
-import com.example.books.entity.BookEntity;
 import com.example.books.entity.UserEntity;
 import com.example.books.exception.InvalidCredentialsException;
 import com.example.books.exception.UserAlreadyExistException;
@@ -76,7 +75,7 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public String createAuthCookie(UserEntity user) {
+    public String createAuthToken(UserEntity user) {
         return user.getId() + "_" + user.getToken();
     }
 

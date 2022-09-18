@@ -1,1 +1,6 @@
 // app global css in SCSS form
+@import './header.scss';
+@import './pages/signIn.scss';
+@import './pages/register.scss';
+@import './bookItem.scss';
+@import './pages/library.scss';

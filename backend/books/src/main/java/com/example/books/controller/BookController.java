@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/books")
 @Slf4j
@@ -22,7 +21,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<Book>> books() {
         var bookEntityList = bookService.getAllBooks();
         var books = bookEntityList.stream()

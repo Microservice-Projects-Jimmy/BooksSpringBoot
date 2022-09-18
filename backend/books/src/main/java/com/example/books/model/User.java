@@ -7,6 +7,8 @@ public class User {
     private String username;
     private String name;
 
+    private String token;
+
     public static User toModel(UserEntity userEntity){
         User user = new User();
         user.setId(userEntity.getId());
@@ -41,5 +43,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

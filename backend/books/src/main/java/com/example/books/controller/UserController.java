@@ -14,31 +14,29 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
 @RestController
 @Slf4j
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        var user = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+        var userEntity = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
 
-        var authCookie = userService.createAuthCookie(user);
-        response.addCookie(new Cookie(TokenFilter.AUTH_COOKIE, authCookie));
-
-        return ResponseEntity.ok(User.toModel(user));
+        var token = userService.createAuthToken(userEntity);
+        var user = User.toModel(userEntity);
+        user.setToken(token);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest, HttpServletResponse response) {
         var user = userService.register(registerRequest.getName(), registerRequest.getUsername(), registerRequest.getPassword());
 
-        var authCookie = userService.createAuthCookie(user);
+        var authCookie = userService.createAuthToken(user);
         log.info(authCookie);
         response.addCookie(new Cookie(TokenFilter.AUTH_COOKIE, authCookie));
 
@@ -46,12 +44,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<Void> logout(HttpServletRequest request){
         var userId = (Long) request.getAttribute("userId");
         userService.logout(userId);
-        var cookie = new Cookie( TokenFilter.AUTH_COOKIE, "");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
         return ResponseEntity.noContent().build();
     }
 
