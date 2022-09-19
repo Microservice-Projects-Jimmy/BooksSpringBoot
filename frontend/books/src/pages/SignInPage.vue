@@ -15,21 +15,38 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { reactive, ref } from 'vue'
+import { useUserStore } from 'src/stores/user-store';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
+const store = useUserStore();
+const $q = useQuasar();
+const router = useRouter();
+const username = ref('');
+const password = ref('');
 
-
-const username = ref("");
-const password = ref("");
 const form = reactive({
     username,
     password
 });
 
+function showNotif(message: string, type: string) {
+    $q.notify({
+        message: message,
+        type: type
+    })
+}
 
 function signIn() {
     axios.post('http://localhost:8080/login', form).then((res) => {
-        console.log(res.data);
-        localStorage.setItem('token', res.data.token)
-    })
+        store.setToken(res.data.token);
+        store.setName(res.data.name);
+        store.setUsername(res.data.username);
+        router.push('/library');
+    }).catch(function (error) {
+        if (error.response) {
+            showNotif(error.response.data.message, 'negative');
+        }
+    });
 }
 </script>

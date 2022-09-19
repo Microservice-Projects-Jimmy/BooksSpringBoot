@@ -16,6 +16,11 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
+
 const name = ref("");
 const username = ref("");
 const password = ref("");
@@ -25,10 +30,26 @@ const form = reactive({
     password
 });
 
+const router = useRouter();
+
+function showNotif(message: string, type: string) {
+    $q.notify({
+        message: message,
+        type: type
+    })
+}
+
 function register() {
     axios.post('http://localhost:8080/register', form).then((res) => {
-        console.log(res.data);
-    })
+        router.push('/sign-in')
+        showNotif('You have successfully registered', 'positive')
+        showNotif('Now Sign in', 'positive')
+
+    }).catch(function (error) {
+        if (error.response) {
+            showNotif(error.response.data.message, 'negative');
+        }
+    });
 }
 
 

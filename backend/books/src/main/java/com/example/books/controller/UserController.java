@@ -53,6 +53,7 @@ public class UserController {
     @GetMapping("/user/books")
     public ResponseEntity<List<Book>> userBooks(HttpServletRequest request) {
         var userId = (Long) request.getAttribute("userId");
+        log.info(userId.toString());
         var books = userService.getUsersBooks(userId);
 
         return ResponseEntity.ok(books);
