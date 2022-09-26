@@ -21,6 +21,7 @@ public class CorsFilter extends OncePerRequestFilter {
         if(request.getMethod().equalsIgnoreCase("options")){
             return;
         }
+
         filterChain.doFilter(request, response);
 
     }

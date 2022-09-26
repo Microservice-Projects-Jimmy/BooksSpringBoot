@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/books")
 @Slf4j
 public class BookController {
-    private BookService bookService;
+    private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -59,7 +59,7 @@ public class BookController {
 
     @Transactional
     @PutMapping("/return-all")
-    public ResponseEntity returnAllbooks (HttpServletRequest request){
+    public ResponseEntity returnAllBooks (HttpServletRequest request){
         var userId = (Long) request.getAttribute("userId");
         var books = bookService.getAllBooksOfUser(userId);
         bookService.returnAll(userId, books);

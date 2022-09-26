@@ -20,6 +20,13 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(String name, String username, String password, String token) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.token = token;
+    }
+
     public String getToken() {
         return token;
     }

@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { useBooksStore } from 'src/stores/books-store';
-import { useQuasar } from 'quasar'
+import { useQuasar } from 'quasar';
 
 
 const $q = useQuasar();

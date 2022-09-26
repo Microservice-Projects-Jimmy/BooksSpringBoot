@@ -93,4 +93,8 @@ public class BookEntity {
     public void setCopyCount(int copyCount) {
         this.copyCount = copyCount;
     }
+
+    public void incrementCopyCount() {
+        this.copyCount++;
+    }
 }
