@@ -1,5 +1,6 @@
 package com.example.books.service;
 
+import com.example.books.entity.RoleEntity;
 import com.example.books.entity.UserEntity;
 import com.example.books.exception.InvalidCredentialsException;
 import com.example.books.exception.UserAlreadyExistException;
@@ -18,7 +19,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -43,6 +43,7 @@ public class UserService {
         user.setUsername(username);
         user.setPassword(hashPassword(password));
         user.setToken(generateToken());
+        user.setRoleId(RoleEntity.USER_ROLE_ID);
 
         return userRepository.save(user);
     }
@@ -94,7 +95,7 @@ public class UserService {
 
         try {
             byte[] hash = factory.generateSecret(spec).getEncoded();
-            return new String(hash);
+            return Base64.getEncoder().encodeToString(hash);
         } catch (InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
@@ -113,8 +114,10 @@ public class UserService {
 
         var bookEntities = bookRepository.findAllBooksOfUser(id);
 
-        bookEntities.stream().map(bookEntity -> usersBooks.add(Book.toModel(bookEntity))).collect(Collectors.toList());
+        bookEntities.forEach(bookEntity -> usersBooks.add(Book.toModel(bookEntity)));
 
         return usersBooks;
     }
+
+
 }

@@ -2,15 +2,21 @@ package com.example.books.service;
 
 import com.example.books.entity.BookEntity;
 import com.example.books.entity.UserBookEntity;
+import com.example.books.entity.UserEntity;
 import com.example.books.exception.BookMissingException;
 import com.example.books.exception.UserAlreadyHasThisBookException;
 import com.example.books.exception.UserReachedBorrowLimit;
 import com.example.books.repository.BookRepository;
 import com.example.books.repository.UserBookRepository;
+import com.example.books.request.BookRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +40,9 @@ public class BookService {
         return list;
     }
 
-    public void borrowBook(Long userId, BookEntity book) {
+    public UserBookEntity borrowBook(Long userId, BookEntity book) {
         var bookCount = book.getCopyCount();
+
         if(bookCount < 2){
             throw new BookMissingException();
         }
@@ -44,7 +51,9 @@ public class BookService {
         var entity = new UserBookEntity();
         entity.setUserId(userId);
         entity.setBookId(book.getId());
-        userBookRepository.save(entity);
+        entity.setCreatedAt(OffsetDateTime.now());
+        entity.setDueToDate(OffsetDateTime.now().plusDays(3));
+        return  entity; // userBookRepository.save(entity);
     }
 
     public void validateUserForBorrow(Long userId, Long bookId) {
@@ -82,4 +91,22 @@ public class BookService {
         userBookRepository.deleteByUserId(userId);
     }
 
+    public BookEntity addBook(BookRequest bookRequest) {
+        var bookEntity = new BookEntity();
+        bookEntity.setName(bookRequest.getName());
+        bookEntity.setAuthor(bookRequest.getAuthor());
+        bookEntity.setDescription(bookRequest.getDescription());
+        bookEntity.setCopyCount(bookRequest.getCopyCount());
+        bookEntity.setImage(bookRequest.getImage());
+        bookEntity.setCopyCount(bookRequest.getCopyCount());
+        bookEntity.setPublishedDate(bookRequest.getPublishedDate());
+        bookEntity.setCreatedAt(LocalDateTime.now());
+
+        return bookRepository.save(bookEntity);
+    }
+
+//    public Date calculateDueToDate(Long user_id){
+//        var userEntity = getAllBooksOfUser(user_id);
+//        userEntity.
+//    }
 }

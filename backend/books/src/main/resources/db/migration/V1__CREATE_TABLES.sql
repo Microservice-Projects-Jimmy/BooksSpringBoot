@@ -1,5 +1,4 @@
-CREATE TABLE books
-  (
+CREATE TABLE books (
      id             SERIAL PRIMARY KEY,
      name           VARCHAR(255),
      author         VARCHAR(255),
@@ -28,6 +27,7 @@ CREATE TABLE users
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER,
     book_id         INTEGER,
+    due_to_date     DATE,
     created_at      TIMESTAMP,
     deleted_at      TIMESTAMP
 

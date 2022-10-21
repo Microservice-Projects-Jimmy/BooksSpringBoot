@@ -38,13 +38,12 @@ public class UserController {
         var user = userService.register(registerRequest.getName(), registerRequest.getUsername(), registerRequest.getPassword());
 
         var authCookie = userService.createAuthToken(user);
-        log.info(authCookie);
         response.addCookie(new Cookie(TokenFilter.AUTH_COOKIE, authCookie));
 
         return ResponseEntity.ok(User.toModel(user));
     }
 
-    @PostMapping("/logout")
+    @PutMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request){
         var userId = (Long) request.getAttribute("userId");
         userService.logout(userId);
@@ -54,7 +53,6 @@ public class UserController {
     @GetMapping("/user/books")
     public ResponseEntity<List<Book>> userBooks(HttpServletRequest request) {
         var userId = (Long) request.getAttribute("userId");
-        log.info(userId.toString());
         var books = userService.getUsersBooks(userId);
 
         return ResponseEntity.ok(books);

@@ -57,7 +57,6 @@ public class BookController {
         return ResponseEntity.ok().build();
     }
 
-    @Transactional
     @PutMapping("/return-all")
     public ResponseEntity returnAllBooks (HttpServletRequest request){
         var userId = (Long) request.getAttribute("userId");
