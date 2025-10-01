@@ -1,43 +1,40 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <!-- <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component> -->
-    <span class="text-h6">Welcome To Library, If you want to see books you need to sign in</span>
+  <q-page class="home-page">
+    <div>
+      <section class="intro">
+        <span>Buy and sell your books </span>
+        <span>for the best prices</span>
+      </section>
+      <section class="sub-info">
+        Find and read more yuor’ll love, and keep track of the books you want to
+        read. Be part of the word’s largeest community of book lovers on
+        Goodreads.
+      </section>
+    </div>
   </q-page>
 </template>
 
-<script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
+<script setup lang="ts"></script>
 
-// const todos = ref<Todo[]>([
-//   {
-//     id: 1,
-//     content: 'ct1'
-//   },
-//   {
-//     id: 2,
-//     content: 'ct2'
-//   },
-//   {
-//     id: 3,
-//     content: 'ct3'
-//   },
-//   {
-//     id: 4,
-//     content: 'ct4'
-//   },
-//   {
-//     id: 5,
-//     content: 'ct5'
-//   }
-// ]);
-// const meta = ref<Meta>({
-//   totalCount: 1200
-// });
-</script>
+<style scoped lang="scss">
+.home-page {
+  --font-size: 18px;
+  --font-weight: 500;
+  color: #000000;
+  padding: 50px 150px;
+}
+
+.sub-info {
+  max-width: 890px;
+  font-size: calc(var(--font-size) + 7px);
+}
+
+.intro {
+  max-width: 770px;
+  font-size: calc(var(--font-size) * 4);
+  font-weight: calc(var(--font-weight) + 300);
+  & span:nth-child(2) {
+    color: #6366f1;
+  }
+}
+</style>

@@ -1,6 +1,12 @@
 // app global css in SCSS form
-@import './header.scss';
 @import './pages/signIn.scss';
 @import './pages/register.scss';
 @import './bookItem.scss';
 @import './pages/library.scss';
+body {
+  font-family: 'Manrope', sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
