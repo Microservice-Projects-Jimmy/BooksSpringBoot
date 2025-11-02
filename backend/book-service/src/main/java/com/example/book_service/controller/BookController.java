@@ -14,9 +14,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping
+    @GetMapping("get-all")
     public ResponseEntity<?> getBooks() {
-        System.out.println("Fetching all books");
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 }

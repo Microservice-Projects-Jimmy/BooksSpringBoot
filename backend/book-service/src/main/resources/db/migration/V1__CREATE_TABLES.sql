@@ -11,23 +11,19 @@ CREATE TABLE books (
 
   );
 
-CREATE TABLE users
-  (
+CREATE TABLE authors (
      id             SERIAL PRIMARY KEY,
      name           VARCHAR(255),
-     username       VARCHAR(255),
-     password       VARCHAR(255),
-     token          VARCHAR(255),
+     biography      VARCHAR(255),
      created_at     TIMESTAMP,
      deleted_at     TIMESTAMP
   );
 
-  CREATE TABLE users_books
+  CREATE TABLE author_books
   (
     id              SERIAL PRIMARY KEY,
-    user_id         INTEGER,
+    author_id       INTEGER,
     book_id         INTEGER,
-    due_to_date     DATE,
     created_at      TIMESTAMP,
     deleted_at      TIMESTAMP
 
