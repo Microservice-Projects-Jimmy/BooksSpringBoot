@@ -57,23 +57,47 @@
         <img src="@/assets/images/main.png" alt="cover books" width="480" height="500" />
       </div>
     </div>
-    <section class="best-sellers">
-      <div class="text-center text-3xl font-bold pt-10 mb-5">Best Seller Books</div>
-      <section class="books">
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-      </section>
+    <section class="best-sellers"><Courusel title="Best Seller" :books="books" /></section>
+    <section class="advertisement">
+      <Explore />
+    </section>
+    <section class="award w-full">
+      <div class="award-background-fone"></div>
+      <div class="flex flex-col gap-10">
+        <span class="text">2025 National Book Awards for Fiction Shortlist</span>
+        <button>Explore Now</button>
+      </div>
+      <img src="@/assets/images/award.png" alt="Award Image" />
+    </section>
+    <section class="new-releases">
+      <Courusel title="New Realeses" :books="books" />
+    </section>
+    <section class="subscribe">
+      <div class="flex flex-col w-1/2">
+        <span>Become Premium</span>
+        <span>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo ad non reprehenderit.
+        </span>
+        <button>Buy Premium</button>
+      </div>
+      <div>
+        <img src="@/assets/images/subs.png" alt="Premium Subscription" />
+      </div>
     </section>
   </div>
+  <section>
+    <Footer></Footer>
+  </section>
 </template>
 
 <script setup lang="ts">
 import Header from '@/components/HeaderView.vue'
 import { ref } from 'vue'
-import BookCard from '@/components/BookCardView.vue'
+import Courusel from '@/components/CouruselView.vue'
+import Explore from '@/components/ExploreView.vue'
+import Footer from '@/components/FooterView.vue'
+
+import { books } from '@/shared/dummyDatas/books'
 
 const search = ref('')
 </script>
@@ -137,10 +161,69 @@ input:focus {
 .best-sellers {
   margin-top: 250px;
 }
-.books {
+
+.advertisement {
+  margin-top: 200px;
+}
+.award {
+  position: relative;
+  left: 0;
+  min-height: 500px;
+  margin-top: 150px;
   display: flex;
-  gap: 20px;
-  width: 100%;
-  overflow-x: auto;
+  align-items: center;
+  justify-content: space-between;
+  .text {
+    font-size: 36px;
+    font-weight: 600;
+  }
+}
+.award-background-fone {
+  position: absolute;
+  background-color: #fef9c3;
+  height: 100%;
+  width: 100vw;
+  left: -150px;
+  z-index: -1;
+  overflow: hidden;
+}
+.subscribe {
+  margin-top: 120px;
+  height: 536px;
+  background-color: #fef9c3;
+  display: flex;
+  padding-inline: 110px;
+  justify-content: space-between;
+  align-items: center;
+  & > div > span:first-child {
+    font-size: 56px;
+    font-weight: 800;
+  }
+  & > div > span:nth-child(2) {
+    font-size: 26px;
+    margin-top: 20px;
+    margin-bottom: 90px;
+  }
+  img {
+    width: 578px;
+  }
+}
+button {
+  margin-top: auto;
+  padding: 10px 20px;
+  font-size: 26px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  max-width: 200px;
+}
+
+button:hover {
+  background-color: #4f46e5;
+}
+img {
+  width: 470px;
 }
 </style>

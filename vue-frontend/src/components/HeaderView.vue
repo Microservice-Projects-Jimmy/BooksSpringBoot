@@ -51,6 +51,7 @@ const notificationCount = ref(15)
     font-size: var(--font-size);
     font-weight: var(--font-weight);
     .item:hover {
+      text-decoration: underline;
       cursor: pointer;
     }
     ul {

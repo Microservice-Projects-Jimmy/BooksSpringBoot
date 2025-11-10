@@ -4,25 +4,44 @@
       <img src="@/assets/images/book.png" alt="Example Book" />
     </section>
     <section class="book-details">
-      <div class="book-title">Shadows of Doubt</div>
+      <div class="book-title">{{ bookTitle }}</div>
       <div class="book-author">
-        Jimmi Shukurov
-        <span class="book-rate">
-          <svg
-            width="24"
-            height="23"
-            viewBox="0 0 24 23"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11.7118 0L15.7942 6.81934L23.4237 8.6664L18.3173 14.7281L18.9501 22.6889L11.7118 19.6159L4.47347 22.6889L5.10631 14.7281L-6.48499e-05 8.6664L7.62938 6.81934L11.7118 0Z"
-              fill="#84CC16"
-            />
-          </svg>
-        </span>
+        {{ bookAuthor }}
+        <section class="book-rate flex">
+          <span v-for="star in 5" :key="star" class="star-wrapper">
+            <!-- Gray background star -->
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="star-bg"
+            >
+              <path
+                d="M11.7118 0L15.7942 6.81934L23.4237 8.6664L18.3173 14.7281L18.9501 22.6889L11.7118 19.6159L4.47347 22.6889L5.10631 14.7281L-6.48499e-05 8.6664L7.62938 6.81934L11.7118 0Z"
+                fill="#C7D2FE"
+              />
+            </svg>
+            <!-- Green foreground star (clipped) -->
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="star-fg"
+              :style="{ clipPath: `inset(0 ${100 - getStarFillPercentage(star)}% 0 0)` }"
+            >
+              <path
+                d="M11.7118 0L15.7942 6.81934L23.4237 8.6664L18.3173 14.7281L18.9501 22.6889L11.7118 19.6159L4.47347 22.6889L5.10631 14.7281L-6.48499e-05 8.6664L7.62938 6.81934L11.7118 0Z"
+                fill="#84CC16"
+              />
+            </svg>
+          </span>
+        </section>
       </div>
-      <p class="book-description">A detective novel filled with twists and unexpected turns .</p>
+      <p class="book-description">{{ bookDescription }}</p>
     </section>
     <button class="buy-button">
       <span>
@@ -47,7 +66,33 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const props = defineProps({
+  book: {
+    type: Object,
+    required: true,
+  },
+})
+
+const bookTitle = computed(() => props.book.book_title)
+const bookAuthor = computed(() => props.book.book_author)
+const bookDescription = computed(() => props.book.book_description)
+const bookRating = computed(() => props.book.book_ratings)
+
+const getStarFillPercentage = (starIndex: number): number => {
+  const rating = bookRating.value || 0
+
+  if (rating >= starIndex) {
+    return 100
+  } else if (rating > starIndex - 1) {
+    return (rating - (starIndex - 1)) * 100
+  } else {
+    return 0
+  }
+}
+</script>
 
 <style scoped lang="scss">
 .book-card {
@@ -73,6 +118,10 @@
   align-items: center;
   background-color: #d9d9d9;
   border-radius: 1rem;
+  img {
+    max-width: 200px;
+    max-height: 255px;
+  }
 }
 .buy-button {
   background-color: #18181b;
@@ -108,6 +157,23 @@
   &-description {
     color: #4f514c;
     font-weight: 700;
+  }
+}
+.book-rate {
+  display: flex;
+  gap: 4px; // Add some spacing between stars
+
+  span.star-wrapper {
+    position: relative;
+    display: inline-block; // This is crucial!
+    width: 24px;
+    height: 23px;
+
+    & > svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 }
 </style>
